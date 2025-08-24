@@ -55,6 +55,7 @@ When passing a callback to someone else’s code, that code decides **when/how/o
 ### 0. Importance of Callbacks
 
 Callbacks let code run later, after something finishes.
+
 👉 **Analogy (Homework):** Teacher gives you homework and says:
 "When you finish, show me your notebook."
 That instruction to “show the notebook later” is the callback. Without callbacks, you’d just sit and wait until the homework is done.
@@ -64,6 +65,7 @@ That instruction to “show the notebook later” is the callback. Without callb
 #### a. Callback Hell
 
 Too many callbacks inside each other → code becomes messy.
+
 👉 **Analogy:**
 Teacher says:
 
@@ -76,6 +78,7 @@ Now your notebook looks like a staircase of instructions, super hard to follow. 
 #### b. Inversion of Control
 
 You trust someone else to call your function at the right time, but you don’t control it.
+
 👉 **Analogy:**
 You gave your notebook to a class monitor saying:
 "Submit this to teacher when I’m done."
