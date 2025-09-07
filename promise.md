@@ -268,6 +268,87 @@ Promise.any([
 
 ---
 
+## Promisification
+
+> **What is Promisification?**  
+> Promisification means converting a function that uses callbacks into a function that returns a Promise.
+
+Most older Node.js functions or browser APIs use callbacks:
+
+```js
+fs.readFile('file.txt', (err, data) => {
+    if (err) {
+        console.error(err);
+    } else {
+        console.log(data);
+    }
+});
+```
+
+With promisification, we can convert this into a Promise-based function so that we can use `.then()` or `async/await`.
+
+---
+
+### ✅ Example of Promisification
+
+```js
+const fs = require('fs');
+const { promisify } = require('util');
+
+// Convert readFile (callback-based) to promise-based
+const readFileAsync = promisify(fs.readFile);
+
+// Now, use as a Promise
+readFileAsync('file.txt', 'utf-8')
+    .then(data => console.log(data))
+    .catch(err => console.error(err));
+```
+
+Or with `async/await`:
+
+```js
+async function readFile() {
+    try {
+        const data = await readFileAsync('file.txt', 'utf-8');
+        console.log(data);
+    } catch (err) {
+        console.error(err);
+    }
+}
+```
+
+> **Why is this useful in interviews?**  
+> Promises give cleaner, more readable code and help avoid “callback hell”.
+
+---
+
+## Thenable
+
+> **What is a Thenable?**  
+> A Thenable is any object that has a `.then()` method, even if it’s not a proper Promise.
+>
+> - JavaScript treats Thenable objects like Promises.
+
+```js
+class Thenable {
+  constructor(num) {
+    this.num = num;
+  }
+  then(resolve, reject) {
+    alert(resolve); // function() { native code }
+    // resolve with this.num*2 after 1 second
+    setTimeout(() => resolve(this.num * 2), 1000);
+  }
+}
+
+new Promise(resolve => resolve(1))
+  .then(result => {
+    return new Thenable(result);
+  })
+  .then(alert); // shows 2 after 1000ms
+```
+
+
 <div align="center">
   <b>Happy Coding! 🚀</b>
 </div>
