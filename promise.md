@@ -348,6 +348,80 @@ new Promise(resolve => resolve(1))
   .then(alert); // shows 2 after 1000ms
 ```
 
+---
+
+## Async/Await
+
+> **A special syntax to work with promises in a more comfortable fashion, called “async/await”. It’s easy to understand and use.**
+
+---
+
+### Async functions
+
+Placing the word `async` before a function declaration ensures that the function always returns a promise. If the function returns a non-promise value, it is automatically wrapped in a resolved promise.
+
+```js
+async function f() {
+    return 1;
+}
+
+f().then(alert); // 1
+```
+
+---
+
+### Await
+
+- The keyword `await` makes JavaScript wait until that promise settles and returns its result.
+- The `await` keyword can only be used inside an `async` function. Using it outside of an `async` function will result in a syntax error.
+- The `await` keyword pauses the execution of the async function until the promise settles, then resumes with the resolved value. This non-blocking behavior allows the JavaScript engine to continue processing other tasks while waiting.
+
+```js
+async function f() {
+    let promise = new Promise((resolve, reject) => {
+        setTimeout(() => resolve("done!"), 1000)
+    });
+
+    let result = await promise; // wait until the promise resolves (*)
+
+    alert(result); // "done!"
+}
+
+f();
+```
+
+---
+
+### Error handling
+
+If a promise resolves successfully, `await promise` returns its result. If the promise is rejected, `await` throws the error, behaving as if a `throw` occurred at that line.
+
+```js
+async function f() {
+    try {
+        let response = await fetch('/no-user-here');
+        let user = await response.json();
+    } catch(err) {
+        // catches errors both in fetch and response.json
+        alert(err);
+    }
+}
+f();
+```
+
+---
+
+### Summary
+
+- The `async` keyword before a function has two effects:
+        1. Makes it always return a promise.
+        2. Allows `await` to be used in it.
+- The `await` keyword before a promise makes JavaScript wait until that promise settles, and then:
+        1. If it’s an error, an exception is generated — same as if `throw error` were called at that very place.
+        2. Otherwise, it returns the result.
+
+
+
 
 <div align="center">
   <b>Happy Coding! 🚀</b>
